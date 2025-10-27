@@ -101,7 +101,22 @@ Once deployed, you can share the Vercel URL with others. They will be able to ac
 
 ## Troubleshooting
 
-If you encounter any issues during deployment, check the following:
+### Fixing "npm install" Errors
+
+If you encounter the error "Command 'npm install' exited with 1" during deployment, it's likely due to incompatible package versions. Here are the steps to fix it:
+
+1. Check your package.json for incorrect or non-existent package versions:
+   - Make sure `dotenv` is using version `^16.3.1` (not `^17.2.3`)
+   - Update `@hookform/resolvers` to version `^3.3.2`
+   - Update `react-hook-form` to version `^7.48.2`
+   - Update `zod` to version `^3.22.4`
+   - Update TypeScript types to compatible versions
+
+2. After updating package.json, commit and push your changes, then redeploy.
+
+### Other Common Issues
+
+If you encounter other issues during deployment, check the following:
 
 1. **Environment Variable Issues**:
    - Make sure all environment variables are set directly in the Vercel dashboard under Settings > Environment Variables
