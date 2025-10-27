@@ -14,7 +14,8 @@
     "seed-expenses": "node scripts/seed-expenses.js",
     "seed-payments": "node scripts/seed-payments.js",
     "seed-all": "node scripts/seed-all.js",
-    "test-mongodb": "node scripts/test-mongodb-connection.js"
+    "test-mongodb": "node scripts/test-mongodb-connection.js",
+    "generate-secret": "node scripts/generate-secret.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

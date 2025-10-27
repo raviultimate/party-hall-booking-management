@@ -100,10 +100,23 @@ The system provides complete CRUD (Create, Read, Update, Delete) operations for 
 
 ### Expenses Management
 - View all expenses with search and category filtering
-- Add new expenses with category classification
-- Edit expense details
+- Add new expenses with category classification (both booking-specific and generic expenses)
+- Edit expense details with rich text description
+- Auto-attribution of expenses to the logged-in user
 - Delete expenses
+- Form validation with visual feedback
 
 ## Deployment
 
-This project is configured for deployment on Vercel. Simply connect your GitHub repository to Vercel and it will automatically deploy.
+This project is configured for deployment on Vercel. Follow these steps to deploy:
+
+1. Create a GitHub repository and push your code
+2. Create a Vercel account at [vercel.com](https://vercel.com)
+3. Connect your GitHub repository to Vercel
+4. Add the following environment variables in the Vercel dashboard:
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `NEXTAUTH_URL`: The URL of your deployed application
+   - `NEXTAUTH_SECRET`: A secure random string for session encryption
+5. Deploy the application
+
+After deployment, you can share the Vercel URL with others to use the system.
