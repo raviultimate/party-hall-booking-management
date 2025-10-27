@@ -51,10 +51,10 @@ This guide will walk you through the process of deploying the Party Function Hal
 4. Configure the project:
    - Framework Preset: Next.js
    - Root Directory: ./
-5. Add the following environment variables:
-   - `MONGODB_URI`: Your MongoDB connection string
-   - `NEXTAUTH_URL`: The URL of your deployed application (you can use the Vercel preview URL initially and update it later)
-   - `NEXTAUTH_SECRET`: A secure random string for session encryption (you can generate one with `openssl rand -base64 32`)
+5. Add the following environment variables in the Vercel dashboard (Settings > Environment Variables):
+   - `MONGODB_URI`: Your MongoDB connection string from step 1
+   - `NEXTAUTH_URL`: Set this to your Vercel deployment URL (e.g., `https://your-project-name.vercel.app`)
+   - `NEXTAUTH_SECRET`: A secure random string for session encryption (you can generate one with `npm run generate-secret`)
 6. Click "Deploy"
 
 ## Step 4: Seed the Database
@@ -103,10 +103,24 @@ Once deployed, you can share the Vercel URL with others. They will be able to ac
 
 If you encounter any issues during deployment, check the following:
 
-1. Make sure your MongoDB connection string is correct and the database user has the right permissions
-2. Check that all environment variables are set correctly in the Vercel dashboard
-3. Review the build logs in the Vercel dashboard for any errors
-4. Make sure your MongoDB Atlas cluster allows connections from Vercel's IP addresses (you might need to allow access from anywhere for simplicity)
+1. **Environment Variable Issues**:
+   - Make sure all environment variables are set directly in the Vercel dashboard under Settings > Environment Variables
+   - Do not use the `@` prefix in your environment variable values (e.g., use the actual MongoDB URI, not `@mongodb-uri`)
+   - Verify that your MongoDB connection string is correct and includes the database name
+   - Ensure NEXTAUTH_URL is set to your actual deployment URL
+
+2. **MongoDB Connection Issues**:
+   - Make sure your MongoDB Atlas cluster allows connections from Vercel's IP addresses
+   - You may need to set Network Access in MongoDB Atlas to "Allow Access from Anywhere" (0.0.0.0/0) for simplicity
+   - Verify that your database user has the correct permissions (readWrite)
+
+3. **Build Errors**:
+   - Review the build logs in the Vercel dashboard for any errors
+   - If you see TypeScript errors, you may need to update your code or add type definitions
+
+4. **Runtime Errors**:
+   - Check the Function Logs in the Vercel dashboard for any runtime errors
+   - Use the browser console to check for client-side errors
 
 ## Updating Your Deployment
 
