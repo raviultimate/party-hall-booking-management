@@ -4,10 +4,8 @@ const nextConfig = {
   swcMinify: true,
   output: 'standalone',
   distDir: '.next',
-  experimental: {
-    // Required for Vercel
-    appDir: true,
-  },
+  // Netlify specific settings
+  target: 'serverless',
   // Ensure we can find the Next.js installation
   webpack: (config) => {
     return config;
