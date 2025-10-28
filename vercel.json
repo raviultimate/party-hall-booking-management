@@ -1,6 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "chmod +x build.sh fallback-build.sh && ./build.sh || ./fallback-build.sh",
+  "buildCommand": "chmod +x direct-deploy.sh && ./direct-deploy.sh",
   "framework": "nextjs",
-  "installCommand": "echo 'Using custom build script'"
+  "installCommand": "echo 'Using direct deploy script'",
+  "outputDirectory": ".next",
+  "rootDirectory": "."
 }
