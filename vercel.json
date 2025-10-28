@@ -3,6 +3,5 @@
   "buildCommand": "chmod +x direct-deploy.sh && ./direct-deploy.sh",
   "framework": "nextjs",
   "installCommand": "echo 'Using direct deploy script'",
-  "outputDirectory": ".next",
-  "rootDirectory": "."
+  "outputDirectory": ".next"
 }

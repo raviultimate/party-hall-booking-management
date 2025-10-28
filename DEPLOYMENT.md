@@ -163,7 +163,9 @@ If you encounter the error "Command 'npm install' exited with 1" during deployme
    chmod +x build.sh
    ```
 
-#### Approach 3: Create a Fallback Build Script
+#### Approach 3: Use a Direct Deployment Script
+
+This approach creates a minimal Next.js application that is guaranteed to deploy successfully, as a placeholder until you can fix the main application:
 
 1. Create a fallback-build.sh script that uses a minimal package.json:
    ```bash
