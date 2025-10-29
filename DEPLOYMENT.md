@@ -1,11 +1,13 @@
-# Deploying to Vercel
+# Deployment Guide
 
-This guide will walk you through the process of deploying the Party Function Hall Management System to Vercel.
+This guide provides instructions for deploying the Party Function Hall Management System to Vercel or Netlify.
 
 ## Prerequisites
 
 1. A GitHub account
 2. A Vercel account (you can sign up at [vercel.com](https://vercel.com) using your GitHub account)
+3. A Netlify account (you can sign up at [netlify.com](https://netlify.com) using your GitHub account)
+4. A MongoDB Atlas account for the database (or any MongoDB hosting service)
 3. A MongoDB Atlas account for the database (or any MongoDB hosting service)
 
 ## Step 1: Prepare Your MongoDB Database
@@ -257,3 +259,119 @@ If you encounter other issues during deployment, check the following:
 ## Updating Your Deployment
 
 Any changes pushed to your GitHub repository's main branch will automatically trigger a new deployment on Vercel.
+# Deploying to Netlify
+
+This section provides step-by-step instructions for deploying the Party Function Hall Management System to Netlify.
+
+## Prerequisites
+
+1. A GitHub repository with your Party Function Hall Management System code
+2. A Netlify account (you can sign up at [netlify.com](https://netlify.com) using your GitHub account)
+3. A MongoDB Atlas account for the database (or any MongoDB hosting service)
+
+## Step 1: Prepare Your Repository
+
+Ensure your repository includes the following Netlify-specific files:
+
+1. **netlify.toml** - Configuration file for Netlify build settings:
+   ```toml
+   [build]
+     command = "chmod +x netlify-build.sh && ./netlify-build.sh"
+     publish = ".next"
+
+   [build.environment]
+     NETLIFY_NEXT_PLUGIN_SKIP = "true"
+     NODE_VERSION = "18"
+
+   [[plugins]]
+     package = "@netlify/plugin-nextjs"
+
+   [[redirects]]
+     from = "/*"
+     to = "/index.html"
+     status = 200
+   ```
+
+2. **netlify-build.sh** - Custom build script to handle dependencies:
+   ```bash
+   #!/bin/bash
+   set -e
+   set -x
+   npm cache clean --force
+   if [ -d "node_modules" ]; then rm -rf node_modules; fi
+   npm install --legacy-peer-deps --no-fund --no-audit --force
+   npm run build
+   ```
+
+3. **next.config.js** - Updated for Netlify compatibility:
+   ```javascript
+   /** @type {import('next').NextConfig} */
+   const nextConfig = {
+     reactStrictMode: true,
+     swcMinify: true,
+     output: 'standalone',
+     distDir: '.next',
+     webpack: (config) => {
+       return config;
+     },
+   }
+   module.exports = nextConfig
+   ```
+
+## Step 2: Deploy to Netlify
+
+1. Sign up for a Netlify account at [netlify.com](https://app.netlify.com/signup)
+2. Click "New site from Git"
+3. Select your Git provider (GitHub, GitLab, or Bitbucket)
+4. Authorize Netlify to access your repositories
+5. Select the repository containing your Party Hall Booking application
+6. Configure build settings:
+   - Build command: `chmod +x netlify-build.sh && ./netlify-build.sh`
+   - Publish directory: `.next`
+7. Click "Show advanced" and add the following environment variables:
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `NEXTAUTH_URL`: The URL of your Netlify site (you can update this after deployment)
+   - `NEXTAUTH_SECRET`: A secure random string (generate using `npm run generate-secret`)
+8. Click "Deploy site"
+
+## Step 3: Update Environment Variables
+
+After your site is deployed, update the `NEXTAUTH_URL` environment variable with your actual Netlify URL:
+
+1. Go to "Site settings" > "Build & deploy" > "Environment"
+2. Edit the `NEXTAUTH_URL` variable to match your Netlify domain (e.g., `https://your-site-name.netlify.app`)
+3. Trigger a new deployment for the changes to take effect
+
+## Step 4: Testing Your Deployment
+
+1. Once deployment is complete, Netlify will provide you with a URL for your site
+2. Visit the URL to ensure your application is working correctly
+3. Test key functionality:
+   - User authentication
+   - Hall booking
+   - Payment processing
+   - Admin dashboard
+
+## Troubleshooting Netlify Deployments
+
+If you encounter issues with your Netlify deployment, try these solutions:
+
+1. **Build Failures**:
+   - Check the build logs in the Netlify dashboard for specific errors
+   - Ensure your MongoDB Atlas IP whitelist includes `0.0.0.0/0` to allow connections from Netlify
+   - Verify your environment variables are correctly set
+
+2. **Missing Dependencies**:
+   - If you encounter "Module not found" errors, check your package.json to ensure all dependencies are listed
+   - Make sure all dependencies have exact version numbers (no ^ or ~ prefixes)
+   - Update the netlify-build.sh script to include any missing dependencies
+
+3. **NextAuth Issues**:
+   - Make sure NEXTAUTH_URL is set to your Netlify site URL
+   - Ensure NEXTAUTH_SECRET is properly set
+   - Check for CORS errors in the browser console
+
+4. **MongoDB Connection Issues**:
+   - Verify your MongoDB connection string is correct
+   - Ensure your MongoDB Atlas cluster is running and accessible
+   - Check if your IP whitelist in MongoDB Atlas includes Netlify's IP ranges
