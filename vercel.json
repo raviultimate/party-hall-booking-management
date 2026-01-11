@@ -1,7 +1,3 @@
 {
-  "version": 2,
-  "buildCommand": "chmod +x direct-deploy.sh && ./direct-deploy.sh",
-  "framework": "nextjs",
-  "installCommand": "echo 'Using direct deploy script'",
-  "outputDirectory": ".next"
+  "installCommand": "npm install --legacy-peer-deps"
 }
