@@ -1,3 +1,26 @@
 {
-  "installCommand": "npm install --legacy-peer-deps"
+  "version": 2,
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
+  "regions": ["bom1"],
+  "functions": {
+    "app/**/*.js": {
+      "maxDuration": 10,
+      "memory": 1024
+    },
+    "app/api/**/*.js": {
+      "maxDuration": 10,
+      "memory": 1024
+    }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "maxLambdaSize": "50mb"
+      }
+    }
+  ]
 }
