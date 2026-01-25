@@ -66,24 +66,24 @@ EOL
 # Replace the package.json with our new one
 mv package.json.new package.json
 
-# Clean npm cache
-npm cache clean --force
+# Clean pnpm cache
+pnpm store prune
 
 # Remove node_modules if it exists
 if [ -d "node_modules" ]; then
   rm -rf node_modules
 fi
 
-# Remove package-lock.json if it exists
-if [ -f "package-lock.json" ]; then
-  rm package-lock.json
+# Remove pnpm-lock.yaml if it exists
+if [ -f "pnpm-lock.yaml" ]; then
+  rm pnpm-lock.yaml
 fi
 
 # Install dependencies with all flags to bypass issues
-npm install --legacy-peer-deps --no-fund --no-audit --force
+pnpm install
 
 # List installed packages to verify next.js is there
-npm list next
+pnpm list next
 
 # Build the application
-npm run build
+pnpm run build

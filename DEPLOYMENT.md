@@ -56,7 +56,7 @@ This guide provides instructions for deploying the Party Function Hall Managemen
 5. Add the following environment variables in the Vercel dashboard (Settings > Environment Variables):
    - `MONGODB_URI`: Your MongoDB connection string from step 1
    - `NEXTAUTH_URL`: Set this to your Vercel deployment URL (e.g., `https://your-project-name.vercel.app`)
-   - `NEXTAUTH_SECRET`: A secure random string for session encryption (you can generate one with `npm run generate-secret`)
+   - `NEXTAUTH_SECRET`: A secure random string for session encryption (you can generate one with `pnpm run generate-secret`)
 6. Click "Deploy"
 
 ## Step 4: Seed the Database
@@ -68,7 +68,7 @@ After deployment, you need to seed your database with initial data. You have two
 1. Make sure your `.env.local` file has the correct MongoDB URI pointing to your production database
 2. Run the seed scripts:
    ```bash
-   npm run seed-all
+   pnpm run seed-all
    ```
 
 ### Option 2: Use the Vercel CLI to run the seed scripts
@@ -91,7 +91,7 @@ After deployment, you need to seed your database with initial data. You have two
    ```
 5. Run the seed scripts:
    ```bash
-   npm run seed-all
+   pnpm run seed-all
    ```
 
 ## Step 5: Share Your Application
@@ -103,11 +103,11 @@ Once deployed, you can share the Vercel URL with others. They will be able to ac
 
 ## Troubleshooting
 
-### Fixing "npm install" Errors
+### Fixing "pnpm install" Errors
 
-If you encounter the error "Command 'npm install' exited with 1" during deployment, it's likely due to incompatible package versions or peer dependency issues. Here are multiple approaches to fix it:
+If you encounter the error "Command 'pnpm install' exited with 1" during deployment, it's likely due to incompatible package versions or peer dependency issues. Here are multiple approaches to fix it:
 
-#### Approach 1: Use Exact Versions and .npmrc
+#### Approach 1: Use Exact Versions and .pnpmrc
 
 1. Use exact versions in package.json instead of caret (^) versions:
    ```json
@@ -119,45 +119,44 @@ If you encounter the error "Command 'npm install' exited with 1" during deployme
    }
    ```
 
-2. Add a `.npmrc` file to the root of your project with the following content:
+2. Add a `.pnpmrc` file to the root of your project with the following content:
    ```
-   legacy-peer-deps=true
-   strict-peer-dependencies=false
    auto-install-peers=true
+   strict-peer-dependencies=false
    ```
    This will help resolve peer dependency conflicts during installation.
 
-#### Approach 2: Use a Custom Build Script with npm ci
+#### Approach 2: Use a Custom Build Script with pnpm
 
-1. Create a build.sh script that uses npm ci with a backup package-lock.json:
+1. Create a build.sh script that uses pnpm with a backup pnpm-lock.yaml:
    ```bash
    #!/bin/bash
    set -e
    set -x
    
-   # Clean npm cache
-   npm cache clean --force
+   # Clean pnpm cache
+   pnpm store prune
    
    # Remove node_modules if it exists
    if [ -d "node_modules" ]; then
      rm -rf node_modules
    fi
    
-   # Remove package-lock.json if it exists
-   if [ -f "package-lock.json" ]; then
-     rm package-lock.json
+   # Remove pnpm-lock.yaml if it exists
+   if [ -f "pnpm-lock.yaml" ]; then
+     rm pnpm-lock.yaml
    fi
    
-   # Copy our backup package-lock.json
-   if [ -f "package-lock.json.backup" ]; then
-     cp package-lock.json.backup package-lock.json
+   # Copy our backup pnpm-lock.yaml
+   if [ -f "pnpm-lock.yaml.backup" ]; then
+     cp pnpm-lock.yaml.backup pnpm-lock.yaml
    fi
    
-   # Install dependencies with all flags to bypass issues
-   npm ci --legacy-peer-deps --no-fund --no-audit --no-optional
+   # Install dependencies
+   pnpm install --frozen-lockfile
    
    # Build the application
-   npm run build
+   pnpm run build
    ```
 
 2. Make the script executable:
@@ -175,17 +174,17 @@ This approach creates a minimal Next.js application that is guaranteed to deploy
    set -e
    set -x
    
-   # Clean npm cache
-   npm cache clean --force
+   # Clean pnpm cache
+   pnpm store prune
    
    # Remove node_modules if it exists
    if [ -d "node_modules" ]; then
      rm -rf node_modules
    fi
    
-   # Remove package-lock.json if it exists
-   if [ -f "package-lock.json" ]; then
-     rm package-lock.json
+   # Remove pnpm-lock.yaml if it exists
+   if [ -f "pnpm-lock.yaml" ]; then
+     rm pnpm-lock.yaml
    fi
    
    # Create a minimal package.json for deployment
@@ -210,10 +209,10 @@ This approach creates a minimal Next.js application that is guaranteed to deploy
    EOL
    
    # Install only essential dependencies
-   npm install --no-fund --no-audit
+   pnpm install
    
    # Build the application
-   npm run build
+   pnpm run build
    ```
 
 2. Make the script executable:
@@ -297,10 +296,10 @@ Ensure your repository includes the following Netlify-specific files:
    #!/bin/bash
    set -e
    set -x
-   npm cache clean --force
+   pnpm store prune
    if [ -d "node_modules" ]; then rm -rf node_modules; fi
-   npm install --legacy-peer-deps --no-fund --no-audit --force
-   npm run build
+   pnpm install
+   pnpm run build
    ```
 
 3. **next.config.js** - Updated for Netlify compatibility:
@@ -331,7 +330,7 @@ Ensure your repository includes the following Netlify-specific files:
 7. Click "Show advanced" and add the following environment variables:
    - `MONGODB_URI`: Your MongoDB connection string
    - `NEXTAUTH_URL`: The URL of your Netlify site (you can update this after deployment)
-   - `NEXTAUTH_SECRET`: A secure random string (generate using `npm run generate-secret`)
+   - `NEXTAUTH_SECRET`: A secure random string (generate using `pnpm run generate-secret`)
 8. Click "Deploy site"
 
 ## Step 3: Update Environment Variables

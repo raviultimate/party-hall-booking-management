@@ -6,8 +6,8 @@ const fs = require('fs');
 const path = require('path');
 
 try {
-  console.log('Cleaning npm cache...');
-  execSync('npm cache clean --force', { stdio: 'inherit' });
+  console.log('Cleaning pnpm cache...');
+  execSync('pnpm store prune', { stdio: 'inherit' });
 
   console.log('Removing node_modules if it exists...');
   try {
@@ -20,7 +20,7 @@ try {
 
   console.log('Trying to install dependencies with main package.json...');
   try {
-    execSync('npm install --legacy-peer-deps --no-fund --no-audit --force', { stdio: 'inherit' });
+    execSync('pnpm install', { stdio: 'inherit' });
   } catch (e) {
     console.log('Main package.json install failed, trying with fallback package.json...');
     
@@ -35,7 +35,7 @@ try {
       console.log('Using fallback package.json');
       
       // Try installing with the fallback package.json
-      execSync('npm install --no-fund --no-audit', { stdio: 'inherit' });
+      execSync('pnpm install', { stdio: 'inherit' });
     } else {
       console.error('Fallback package.json not found!');
       throw new Error('Both main and fallback package.json installs failed');
@@ -43,7 +43,7 @@ try {
   }
 
   console.log('Building Next.js application...');
-  execSync('npm run build', { stdio: 'inherit' });
+  execSync('pnpm run build', { stdio: 'inherit' });
 
   console.log('Build completed successfully!');
 } catch (error) {

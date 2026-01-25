@@ -41,7 +41,7 @@ cat > package.json << 'EOL'
 EOL
 
 # Install only essential dependencies
-npm install --no-fund --no-audit
+pnpm install
 
 # Build the application
-npm run build
+pnpm run build

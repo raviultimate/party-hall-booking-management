@@ -56,10 +56,10 @@ EOL
 
 # Install dependencies in the temporary directory
 cd temp-deploy
-npm install
+pnpm install
 
 # Build the application
-npm run build
+pnpm run build
 
 # Copy the build output back to the main directory
 cp -r .next ../.next

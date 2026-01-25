@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm run build",
   "framework": "nextjs",
   "regions": ["bom1"],
   "functions": {

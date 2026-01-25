@@ -30,16 +30,16 @@ A comprehensive system for managing party function halls, bookings, customers, p
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 3. Copy `.env.local.example` to `.env.local` and update the values
 4. Run the development server:
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 5. Seed the database with initial data:
    ```bash
-   npm run seed-all
+   pnpm run seed-all
    ```
 6. Open [http://localhost:3000](http://localhost:3000) in your browser
 

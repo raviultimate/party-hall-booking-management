@@ -15,7 +15,7 @@ if [ -d "node_modules" ]; then
 fi
 
 # Install dependencies with all flags to bypass issues
-npm install --legacy-peer-deps --no-fund --no-audit --force
+pnpm install
 
 # Build the application
-npm run build
+pnpm run build

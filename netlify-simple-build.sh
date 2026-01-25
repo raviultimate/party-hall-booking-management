@@ -11,9 +11,9 @@ rm -f package-lock.json
 cp netlify-package.json package.json
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the application
-npm run build
+pnpm run build
 
 echo "Simple build completed"
