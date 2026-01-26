@@ -5,7 +5,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "netlify-build": "pnpm install && next build",
     "start": "next start",
     "lint": "next lint",
     "seed-users": "node scripts/seed-users.js",
@@ -48,7 +47,6 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.13.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "13.5.6",
