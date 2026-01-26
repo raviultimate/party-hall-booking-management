@@ -13,14 +13,5 @@
       "maxDuration": 10,
       "memory": 1024
     }
-  },
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "maxLambdaSize": "50mb"
-      }
-    }
-  ]
+  }
 }
